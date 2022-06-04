@@ -5,4 +5,6 @@ excluded:
 - Carthage
 - Pods
 - SwiftLint/Common/3rdPartyLib
+cyclomatic_complexity:
+  ignores_case_statements: true
 reporter: "xcode"

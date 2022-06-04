@@ -10,6 +10,7 @@ import Kingfisher
 
 class HomeViewController: UIViewController {
   var heroStats: [HeroStats] = []
+  var filteredHero: [HeroStats] = []
   
   // MARK: - Views
   lazy var segmentedControll: UISegmentedControl = {
@@ -77,8 +78,8 @@ class HomeViewController: UIViewController {
     segmentedControll.translatesAutoresizingMaskIntoConstraints = false
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+      scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
       scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       scrollView.heightAnchor.constraint(equalToConstant: 50),
       
@@ -87,6 +88,7 @@ class HomeViewController: UIViewController {
       segmentedControll.topAnchor.constraint(equalTo: scrollView.topAnchor),
       segmentedControll.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
     ])
+    segmentedControll.addTarget(self, action: #selector(tabSelect), for: .valueChanged)
   }
   
   private func setupCollectionView() {
@@ -113,6 +115,8 @@ class HomeViewController: UIViewController {
       case .success(let listHero):
         self.heroStats = listHero
         self.activityIndicator.stopAnimating()
+        self.tabSelect()
+        print("hero stats: \(self.heroStats)")
         self.collectionView.reloadData()
       case .failure(let error):
         self.presentAlert(
@@ -125,6 +129,40 @@ class HomeViewController: UIViewController {
       }
     }
   }
+  
+  private func filteredHeroes(query: String) -> [HeroStats] {
+    return heroStats.filter { heroes in
+      return heroes.roles.contains(query)
+    }
+  }
+  
+  @objc private func tabSelect() {
+    switch segmentedControll.selectedSegmentIndex {
+    case 0:
+      filteredHero = heroStats
+    case 1:
+      filteredHero = filteredHeroes(query: "Carry")
+    case 2:
+      filteredHero = filteredHeroes(query: "Escape")
+    case 3:
+      filteredHero = filteredHeroes(query: "Nuker")
+    case 4:
+      filteredHero = filteredHeroes(query: "Initiator")
+    case 5:
+      filteredHero = filteredHeroes(query: "Durable")
+    case 6:
+      filteredHero = filteredHeroes(query: "Disabler")
+    case 7:
+      filteredHero = filteredHeroes(query: "Jungler")
+    case 8:
+      filteredHero = filteredHeroes(query: "Support")
+    case 9:
+      filteredHero = filteredHeroes(query: "Pusher")
+    default:
+      filteredHero = heroStats
+    }
+    collectionView.reloadData()
+  }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -134,14 +172,16 @@ extension HomeViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return heroStats.count
+//    return heroStats.count
+    return filteredHero.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     if let heroCell = collectionView.dequeueReusableCell(
       withReuseIdentifier: "heroCellId",
       for: indexPath) as? HeroCollectionViewCell {
-      let hero = heroStats[indexPath.row]
+//      let hero = heroStats[indexPath.row]
+      let hero = filteredHero[indexPath.row]
       heroCell.heroNameLabel.text = hero.localizedName
       heroCell.activityIndicator.startAnimating()
       heroCell.heroImageView.kf.setImage(with: URL(string: "https://api.opendota.com\(hero.img)")) { _ in
@@ -158,7 +198,7 @@ extension HomeViewController: UICollectionViewDataSource {
 extension HomeViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let viewController = DetailViewController()
-    viewController.heroDetail = heroStats[indexPath.row]
+    viewController.heroDetail = filteredHero[indexPath.row]
     self.navigationController?.pushViewController(viewController, animated: true)
   }
 }
