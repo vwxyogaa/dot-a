@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 class HomeViewController: UIViewController {
   var heroStats: [HeroStats] = []
@@ -53,7 +54,7 @@ class HomeViewController: UIViewController {
   
   // MARK: - Configure Views
   private func setupViews() {
-    title = "Home"
+    title = "Dot-a"
     view.backgroundColor = .white
     setupStackView()
     setupSegmentedControll()
@@ -82,9 +83,8 @@ class HomeViewController: UIViewController {
       scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
       scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       scrollView.heightAnchor.constraint(equalToConstant: 50),
-      
-      segmentedControll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-      segmentedControll.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+      segmentedControll.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+      segmentedControll.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
       segmentedControll.topAnchor.constraint(equalTo: scrollView.topAnchor),
       segmentedControll.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
     ])
@@ -116,8 +116,8 @@ class HomeViewController: UIViewController {
         self.heroStats = listHero
         self.activityIndicator.stopAnimating()
         self.tabSelect()
-        print("hero stats: \(self.heroStats)")
         self.collectionView.reloadData()
+        self.save()
       case .failure(let error):
         self.presentAlert(
           title: "Oops! Something went wrong",
@@ -172,7 +172,6 @@ extension HomeViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//    return heroStats.count
     return filteredHero.count
   }
   
@@ -180,7 +179,6 @@ extension HomeViewController: UICollectionViewDataSource {
     if let heroCell = collectionView.dequeueReusableCell(
       withReuseIdentifier: "heroCellId",
       for: indexPath) as? HeroCollectionViewCell {
-//      let hero = heroStats[indexPath.row]
       let hero = filteredHero[indexPath.row]
       heroCell.heroNameLabel.text = hero.localizedName
       heroCell.activityIndicator.startAnimating()
@@ -231,5 +229,29 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     layout collectionViewLayout: UICollectionViewLayout,
     minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 16
+  }
+}
+
+extension HomeViewController {
+  private func save() {
+    heroStats.forEach { hero in
+      let heroes = Heroes()
+      let imgData = Data(hero.img.utf8)
+      heroes.img = imgData
+      heroes.localizedName = hero.localizedName
+      heroes.attackType = hero.attackType
+      heroes.primaryAttr = hero.primaryAttr
+      heroes.baseHealth = hero.baseHealth
+      heroes.baseAttackMax = hero.baseAttackMax
+      heroes.moveSpeed = hero.moveSpeed
+      heroes.roles.append(objectsIn: hero.roles)
+      heroes.baseMana = hero.baseMana
+      
+      let realm = try! Realm() // swiftlint:disable:this force_try
+      try! realm.write({ // swiftlint:disable:this force_try
+        realm.add(heroes)
+      })
+      print(realm.configuration.fileURL!)
+    }
   }
 }

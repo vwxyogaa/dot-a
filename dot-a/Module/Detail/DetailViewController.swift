@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import RealmSwift
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController { // swiftlint:disable:this type_body_length
   var heroStats: [HeroStats]?
   var heroDetail: HeroStats?
   
@@ -125,7 +126,7 @@ class DetailViewController: UIViewController {
   
   // MARK: - Configure Views
   private func setupViews() {
-    title = "Detail"
+    title = "Hero Stats"
     view.backgroundColor = .white
     setupScrollView()
     setupContentView()
@@ -325,6 +326,7 @@ extension DetailViewController {
           self.similarImageOne.backgroundColor = .purple
           self.similarImageTwo.backgroundColor = .yellow
           self.similarImageThree.backgroundColor = .green
+          self.save()
         }
       case .failure(let error):
         self.presentAlert(
@@ -338,5 +340,33 @@ extension DetailViewController {
           })
       }
     }
+  }
+}
+
+extension DetailViewController {
+  private func save() {
+    guard let localizedName = nameLabel.text else { return }
+    guard let attackType = typeLabel.text else { return }
+    guard let primaryAttr = attributeLabel.text else { return }
+    guard let baseHealth = healthLabel.text else { return }
+    guard let baseAttackMax = attackLabel.text else { return }
+    guard let moveSpeed = speedLabel.text else { return }
+    guard let roles = rolesLabel.text else { return }
+    guard let img = heroImageView.image, let imgData = img.pngData() as NSData? else { return }
+    
+    let hero = Hero()
+    hero.localizedName = localizedName
+    hero.attackType = attackType
+    hero.primaryAttr = primaryAttr
+    hero.baseHealth = baseHealth
+    hero.baseAttackMax = baseAttackMax
+    hero.moveSpeed = moveSpeed
+    hero.roles.append(roles)
+    hero.img = imgData as Data
+    
+    let realm = try! Realm() // swiftlint:disable:this force_try
+    try! realm.write({ // swiftlint:disable:this force_try
+      realm.add(hero)
+    })
   }
 }

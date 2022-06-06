@@ -21,6 +21,7 @@ struct HeroStats: Codable {
   let baseAttackMax: Int
   let moveSpeed: Int
   let roles: [String]
+  let baseMana: Int
   
   enum CodingKeys: String, CodingKey {
     case id
@@ -32,5 +33,6 @@ struct HeroStats: Codable {
     case baseAttackMax = "base_attack_max"
     case moveSpeed = "move_speed"
     case roles
+    case baseMana = "base_mana"
   }
 }

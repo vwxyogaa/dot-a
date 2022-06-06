@@ -20,10 +20,14 @@
 		E123D0F9284B70FB00D0CCB6 /* RootHeroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E123D0F8284B70FB00D0CCB6 /* RootHeroViewModel.swift */; };
 		E123D0FB284B814500D0CCB6 /* HeroStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E123D0FA284B814500D0CCB6 /* HeroStatsViewModel.swift */; };
 		E123D0FE284B976E00D0CCB6 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E123D0FD284B976E00D0CCB6 /* UIViewControllerExtension.swift */; };
+		E1350CCC284C6A43000C56BE /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E1350CCB284C6A43000C56BE /* Realm */; };
+		E1350CCE284C6A43000C56BE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E1350CCD284C6A43000C56BE /* RealmSwift */; };
 		E14A0264284AF70A00268874 /* HeroCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A0263284AF70A00268874 /* HeroCollectionViewCell.swift */; };
-		E14A026C284B150700268874 /* RootDota.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A026B284B150700268874 /* RootDota.swift */; };
+		E14A026C284B150700268874 /* OpenDota.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A026B284B150700268874 /* OpenDota.swift */; };
 		E14A026F284B179C00268874 /* DotaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A026E284B179C00268874 /* DotaProvider.swift */; };
 		E14A0272284B1D6A00268874 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E14A0271284B1D6A00268874 /* Kingfisher */; };
+		E1EBC469284CB53D00F7DC95 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBC468284CB53D00F7DC95 /* Hero.swift */; };
+		E1EBC46B284D00BF00F7DC95 /* Heroes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBC46A284D00BF00F7DC95 /* Heroes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +65,10 @@
 		E123D0FA284B814500D0CCB6 /* HeroStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroStatsViewModel.swift; sourceTree = "<group>"; };
 		E123D0FD284B976E00D0CCB6 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		E14A0263284AF70A00268874 /* HeroCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCollectionViewCell.swift; sourceTree = "<group>"; };
-		E14A026B284B150700268874 /* RootDota.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootDota.swift; sourceTree = "<group>"; };
+		E14A026B284B150700268874 /* OpenDota.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDota.swift; sourceTree = "<group>"; };
 		E14A026E284B179C00268874 /* DotaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotaProvider.swift; sourceTree = "<group>"; };
+		E1EBC468284CB53D00F7DC95 /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		E1EBC46A284D00BF00F7DC95 /* Heroes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heroes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1350CCE284C6A43000C56BE /* RealmSwift in Frameworks */,
+				E1350CCC284C6A43000C56BE /* Realm in Frameworks */,
 				E14A0272284B1D6A00268874 /* Kingfisher in Frameworks */,
 				E1089EB5284A48F8009CCFEF /* Alamofire in Frameworks */,
 			);
@@ -216,7 +224,9 @@
 		E14A0267284AF73D00268874 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E14A026B284B150700268874 /* RootDota.swift */,
+				E14A026B284B150700268874 /* OpenDota.swift */,
+				E1EBC46A284D00BF00F7DC95 /* Heroes.swift */,
+				E1EBC468284CB53D00F7DC95 /* Hero.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +259,8 @@
 			packageProductDependencies = (
 				E1089EB4284A48F8009CCFEF /* Alamofire */,
 				E14A0271284B1D6A00268874 /* Kingfisher */,
+				E1350CCB284C6A43000C56BE /* Realm */,
+				E1350CCD284C6A43000C56BE /* RealmSwift */,
 			);
 			productName = "dot-a";
 			productReference = E1089E80284A47C8009CCFEF /* dot-a.app */;
@@ -325,6 +337,7 @@
 			packageReferences = (
 				E1089EB3284A48F8009CCFEF /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E14A0270284B1D6A00268874 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				E1350CCA284C6A43000C56BE /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = E1089E81284A47C8009CCFEF /* Products */;
 			projectDirPath = "";
@@ -395,9 +408,11 @@
 				E123D0FE284B976E00D0CCB6 /* UIViewControllerExtension.swift in Sources */,
 				E1089E86284A47C8009CCFEF /* SceneDelegate.swift in Sources */,
 				E14A026F284B179C00268874 /* DotaProvider.swift in Sources */,
+				E1EBC469284CB53D00F7DC95 /* Hero.swift in Sources */,
 				E1089EBA284A4E26009CCFEF /* HomeViewController.swift in Sources */,
 				E1089EBD284A4E32009CCFEF /* DetailViewController.swift in Sources */,
-				E14A026C284B150700268874 /* RootDota.swift in Sources */,
+				E14A026C284B150700268874 /* OpenDota.swift in Sources */,
+				E1EBC46B284D00BF00F7DC95 /* Heroes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,6 +756,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		E1350CCA284C6A43000C56BE /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.19.0;
+			};
+		};
 		E14A0270284B1D6A00268874 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -756,6 +779,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E1089EB3284A48F8009CCFEF /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		E1350CCB284C6A43000C56BE /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1350CCA284C6A43000C56BE /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		E1350CCD284C6A43000C56BE /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1350CCA284C6A43000C56BE /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		E14A0271284B1D6A00268874 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
